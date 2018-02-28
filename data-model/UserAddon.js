@@ -1,8 +1,10 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+'use strict';
 
+const mongoose = require('mongoose');
 
-var UserAddonsSchema = new Schema({
+const Schema = mongoose.Schema;
+
+const UserAddonsSchema = new Schema({
   addonId: {
     type: String,
     unique: true,

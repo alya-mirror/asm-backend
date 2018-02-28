@@ -3,8 +3,14 @@
   "version": "1.0.0",
   "description": "backend for alya smart mirror",
   "main": "index.js",
+  "engines": {
+    "node": ">=6.10.0"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "linter": "./node_modules/.bin/eslint index.js data-model endPoints endPointsServices test",
+    "start": "node index.js",
+    "test": "./node_modules/.bin/mocha test --recursive --reporter spec",
+    "test-build": "./node_modules/.bin/mocha test --recursive --reporter xunit-file"
   },
   "repository": {
     "type": "git",
@@ -21,5 +27,19 @@
     "cors": "^2.8.4",
     "express": "^4.16.2",
     "mongoose": "^5.0.7"
+  },
+  "devDependencies": {
+    "chai": "^3.0.0",
+    "eslint": "^3.19.0",
+    "eslint-config-airbnb-base": "^11.1.1",
+    "eslint-plugin-import": "^2.5.0",
+    "eslint-plugin-json": "^1.2.0",
+    "eslint-plugin-node": "^4.2.1",
+    "mocha": "~2.5.3",
+    "nock": "~9.0.2",
+    "node-mocks-http": "^1.6.4",
+    "should": "~9.0.2",
+    "supertest": "^3.0.0",
+    "xunit-file": "~0.0.7"
   }
 }

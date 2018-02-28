@@ -1,9 +1,11 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
-var bcrypt = require('bcrypt');
+'use strict';
 
+const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
 
-var UserSchema = new Schema({
+const Schema = mongoose.Schema;
+
+const UserSchema = new Schema({
   email: {
     type: String,
     unique: true,
@@ -18,36 +20,37 @@ var UserSchema = new Schema({
     required: true,
   },
   faceId: {
-    type: String
-  },
+    type: String,
+    required: true
+  }
 });
 
 
-UserSchema.pre('save', function (next) {
-  var user = this;
+UserSchema.pre('save', (next) => {
+  const user = this;
 
   if (this.isModified('password') || this.isNew) {
-    bcrypt.genSalt(10, function (err, salt) {
+    bcrypt.genSalt(10, (err, salt) => {
       if (err) {
-        return next(err);
+        next(err);
       }
-      bcrypt.hash(user.password, salt, function (err, hash) {
-        if (err) {
-          return next(err);
+      bcrypt.hash(user.password, salt, (err2, hash) => {
+        if (err2) {
+          next(err2);
         }
         user.password = hash;
         next();
       });
     });
   } else {
-    return next();
+    next();
   }
 });
 
-UserSchema.methods.comparePassword = function (passw, cb) {
-  bcrypt.compare(passw, this.password, function (err, isMatch) {
+UserSchema.methods.comparePassword = (passw, cb) => {
+  bcrypt.compare(passw, this.password, (err, isMatch) => {
     if (err) {
-      return cb(err);
+      cb(err);
     }
     cb(null, isMatch);
   });

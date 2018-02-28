@@ -1,8 +1,10 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+'use strict';
 
+const mongoose = require('mongoose');
 
-var AddonConfigurationSchema = new Schema({
+const Schema = mongoose.Schema;
+
+const AddonConfigurationSchema = new Schema({
   npm_name: {
     type: String,
     unique: true,
@@ -11,7 +13,7 @@ var AddonConfigurationSchema = new Schema({
   addonId: {
     type: String,
     required: true,
-    unique:true
+    unique: true
   },
   settingsSchema: {
     type: Object,

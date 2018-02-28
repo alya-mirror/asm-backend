@@ -1,0 +1,28 @@
+sudo: required
+dist: trusty
+
+language: node_js
+node_js: 6.10.1
+
+env:
+  - CXX=g++-4.8
+
+cache:
+  directories:
+    - node_modules
+
+before_install:
+  - npm install -g npm@5.1.0
+
+before_script:
+  - npm run linter
+
+script:
+  - npm test
+
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - g++-4.8

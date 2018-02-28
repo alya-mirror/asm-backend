@@ -1,8 +1,10 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+'use strict';
 
+const mongoose = require('mongoose');
 
-var AddonSchema = new Schema({
+const Schema = mongoose.Schema;
+
+const AddonSchema = new Schema({
   npm_name: {
     type: String,
     unique: true,
@@ -20,7 +22,7 @@ var AddonSchema = new Schema({
   repo_git_url: {
     type: String,
     required: true
-  },
+  }
 });
 
 module.exports = mongoose.model('Addon', AddonSchema);
