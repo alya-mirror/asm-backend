@@ -21,12 +21,10 @@ const UserSchema = new Schema({
   },
   faceId: {
     type: String,
-    required: true
   }
 });
 
-
-UserSchema.pre('save', (next) => {
+UserSchema.pre('save', function(next) {
   const user = this;
 
   if (this.isModified('password') || this.isNew) {
@@ -47,7 +45,7 @@ UserSchema.pre('save', (next) => {
   }
 });
 
-UserSchema.methods.comparePassword = (passw, cb) => {
+UserSchema.methods.comparePassword = function(passw, cb) {
   bcrypt.compare(passw, this.password, (err, isMatch) => {
     if (err) {
       cb(err);

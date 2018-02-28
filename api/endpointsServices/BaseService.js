@@ -38,7 +38,7 @@ class BaseService {
           reject(err);
         }
         else {
-          resolve(result);
+          resolve(results);
         }
 
       });
@@ -72,6 +72,4 @@ class BaseService {
   }
 
 }
-
-
 module.exports = BaseService;

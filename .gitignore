@@ -26,3 +26,6 @@ npm-debug.log
 .project
 certs/*
 !certs/.gitkeep
+asm-backend\.iml
+
+package-lock\.json

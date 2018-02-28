@@ -1,0 +1,14 @@
+{
+  "topics":{
+    "DATA_TOPIC":"alya-data",
+    "COMMAND_TOPIC":"alya-commands"
+  },
+  "awsIoTConfigs": {
+    "keyFileName": "alya-smart-mirror.private.key",
+    "certFileName": "alya-smart-mirror.cert.pem",
+    "caFileName": "root-CA.crt",
+    "clientId": "alya_smart_mirror",
+    "region": "us-east-1",
+    "host": "ak6hspilv9mrx.iot.us-east-1.amazonaws.com"
+  }
+}

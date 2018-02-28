@@ -20,7 +20,13 @@ class UserService extends BaseService {
         else {
           user.comparePassword(password, function (err, isMatch) {
             if (isMatch && !err) {
-              resolve();
+
+              let trained = true;
+              if (!user.faceId) {
+                trained = false;
+              }
+              let userInformation = {"firstName": user.firstName, "userId": user._id, "trained": trained};
+              resolve(userInformation);
             }
             else {
               reject(400);
@@ -31,6 +37,5 @@ class UserService extends BaseService {
     });
   }
 }
-
 
 module.exports = UserService;

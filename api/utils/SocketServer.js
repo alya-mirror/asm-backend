@@ -1,39 +1,38 @@
 let middleware = require('socketio-wildcard')();
 
 class SocketServer {
-  constructor(io) {
-    this.io = io;
-  }
 
-  connect(path, callbacks , caller) {
-    let self = this;
-    self.io = self.io.of(path);
+  connect(io) {
+    return new Promise((resolve, reject) => {
+      let self = this;
+    self.io = io;
     self.io.use(middleware);
-
     self.io.on('connection', function (socket) {
-      console.log('client has been connected to '+ path);
+      console.log('client has been connected');
       self.socket = socket;
-      self.listen(callbacks , caller);
+      resolve();
+    });
     });
   }
 
-  listen(callbacks , caller) {
+  onMessage(callbacks , caller) {
+    /* the name of the callback is the name of the event received */
     this.socket.on('*', function (packet) {
-      let callbackName = packet.data[0];
+      let eventName = packet.data[0];
       let receivedMessage = packet.data[1];
-      let callback = callbacks[callbackName];
+      let callback = callbacks[eventName];
       if (!callback) {
-        console.log('not known message ' + callbackName);
+        console.log('not known message ' + eventName);
         return;
       }
-      console.log("socket message received from " + callbackName + " message : " + receivedMessage);
+      console.log("socket message received from " + eventName + " message : " + receivedMessage);
       callback(receivedMessage , caller);
     });
   }
 
   emitEvent(eventName, message) {
     return new Promise((resolve, reject) => {
-      this.socket.broadcast.emit(eventName, message);
+      this.socket.emit(eventName, message);
       console.log("socket message published successfully: " + eventName + " message " + message);
       resolve();
     });
