@@ -24,7 +24,7 @@ The backend provide the communication between the mirror and the app and it also
 * General scenario 
 <img width="979" alt="screenshot at mar 04 17-22-21" src="https://user-images.githubusercontent.com/21360696/36948909-ae1f2af4-1fe1-11e8-9820-27d3e54c12b2.png">
 
-* All detailed scenario here 
+* All detailed scenario [here](https://github.com/alya-mirror/asm-backend/blob/master/docs/detailedScenarios.md) 
 # Services Used
 The backend is built on nodejs and it uses some services such as mongodb for handling the database and bcrypt for password encryption .
 For the communication we are using HTTP endpoints , socket and aws mqtt as in the picture below :
