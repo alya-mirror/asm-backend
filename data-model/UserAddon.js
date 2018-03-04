@@ -7,12 +7,10 @@ const Schema = mongoose.Schema;
 const UserAddonsSchema = new Schema({
   addonId: {
     type: String,
-    unique: true,
     required: true
   },
   userId: {
     type: String,
-    unique: true,
     required: true
   },
   coreSettings: {

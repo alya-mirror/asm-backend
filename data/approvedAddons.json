@@ -1,0 +1,20 @@
+[
+  {
+    "name": "ASManalogClock",
+    "description": "an analog clock addon for alya smart mirror",
+    "npm_name": "asm-analog-clock",
+    "repo_git_url": "https://github.com/alya-mirror/asm-analog-clock-addon"
+  },
+  {
+    "name": "ASMyoutube",
+    "description": "youtube addon for alya smart mirror",
+    "npm_name": "asm-youtube",
+    "repo_git_url": "https://github.com/alya-mirror/asm-youtube-addon"
+  },
+  {
+    "name": "ASMyoutube",
+    "description": "A react component that shows date/time for alya-smart-mirror",
+    "npm_name": "asm-date-time",
+    "repo_git_url": "https://github.com/alya-mirror/asm-digital-clock-addon"
+  }
+]

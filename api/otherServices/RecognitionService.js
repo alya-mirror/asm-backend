@@ -1,12 +1,16 @@
 const config = require('../../config/config.default');
 const SocketServer = require('../utils/SocketServer');
 const UserSchema = require('../../data-model/User');
+const UserAddonSchema = require('../../data-model/UserAddon');
 
 class RecognitionService {
 
   initialize(socketIo, awsIotClient) {
     this.awsIotClient = awsIotClient;
-    this.mqttCallbacks = {"matrix-recognition-train": this.finishedTraining, "matrix-recognition-recognize": this.recognize};
+    this.mqttCallbacks = {
+      "matrix-recognition-train": this.finishedTraining,
+      "matrix-recognition-recognize": this.recognize
+    };
     this.awsIotClient.onDifferentMessages(this.mqttCallbacks, this);
 
     this.socketServer = new SocketServer();
@@ -21,8 +25,8 @@ class RecognitionService {
       message = message.toString();
       message = JSON.parse(message);
     }
-    catch (err){
-      console.log('error in the json format '+ err);
+    catch (err) {
+      console.log('error in the json format ' + err);
       return;
     }
     let userId = message.data.userId;
@@ -46,10 +50,10 @@ class RecognitionService {
     UserSchema.findOneAndUpdate({_id: userId}, {$set: {faceId: faceId}}, function (err, user) {
       if (err || !user) {
         //TODO DECIDE WHAT ERROR YOU SHOULD SEND
-          console.log(err + userId);
+        console.log(err + userId);
         return;
       }
-      let sentMessage = {"data":{"userId":userId}}
+      let sentMessage = {"data": {"userId": userId}};
       caller.socketServer.emitEvent("finished_training", JSON.stringify(sentMessage)).then(() => {
       });
     });
@@ -70,7 +74,15 @@ class RecognitionService {
         return;
       }
       let userId = user._id;
-      //TODO send socket notification to mirror to show the user specific addons
+      UserAddonSchema.find({userId: userId}, function (err, userAddons) {
+        if (err) {
+          console.log(err);
+          return;
+        }
+        let message = {"data": {"userAddons": userAddons}};
+        caller.socketServer.emitEvent("show_addons", JSON.stringify(message)).then(() => {
+        });
+      })
     });
   }
 }

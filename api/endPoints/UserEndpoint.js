@@ -1,7 +1,7 @@
 const UserService = require('../endpointsServices/UserService');
 const UserSchema = require('../../data-model/User');
 
-class UserController {
+class UserEndpoint {
 
   initialize(router) {
     this.userService = new UserService(UserSchema);
@@ -14,14 +14,14 @@ class UserController {
   }
 
   signOut(req, res) {
-    const method = 'UserController.signOut';
+    const method = 'UserEndpoint.signOut';
     const path = 'GET ' + this.basePath + '/';
     console.info(method, 'Access to', path);
 
   }
 
   create(req, res) {
-    const method = 'UserController.create ';
+    const method = 'UserEndpoint.create ';
     const path = 'POST ' + this.basePath + '/';
     console.info(method, 'Access to', path);
 
@@ -49,7 +49,7 @@ class UserController {
   };
 
   signIn(req, res) {
-    const method = 'UserController.signIn ';
+    const method = 'UserEndpoint.signIn ';
     const path = 'POST ' + this.basePath + '/';
     console.info(method, 'Access to', path);
 
@@ -64,4 +64,4 @@ class UserController {
     });
   }
 }
-module.exports = UserController;
+module.exports = UserEndpoint;

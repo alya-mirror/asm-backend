@@ -31,8 +31,13 @@ class SocketServer {
   }
 
   emitEvent(eventName, message) {
+    let self = this;
     return new Promise((resolve, reject) => {
-      this.socket.emit(eventName, message);
+      if(!self.socket){
+        reject('there is no client connected');
+        return;
+      }
+      self.socket.emit(eventName, message);
       console.log("socket message published successfully: " + eventName + " message " + message);
       resolve();
     });
