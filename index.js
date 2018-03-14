@@ -7,15 +7,18 @@ const bodyParser = require('body-parser');
 const http = require('http');
 const config = require('./config/config.default');
 const mongoose = require('mongoose');
+
 const UserEndpoint = require('./api/endPoints/UserEndpoint');
 const UserAddonEndpoint = require('./api/endPoints/UserAddonEndpoint');
 const RecognitionService = require('./api/otherServices/RecognitionService');
 const AddonEndpoint = require('./api/endPoints/AddonEndpoint');
+const AddonConfigurationSchemaEndpoint = require('./api/endPoints/AddonConfigurationSchemaEndpoint');
 
 const userEndpoint = new UserEndpoint();
 const recognitionService = new RecognitionService();
 const userAddonEndpoint = new UserAddonEndpoint();
 const addonEndpoint = new AddonEndpoint();
+const addonConfigurationSchemaEndpoint = new AddonConfigurationSchemaEndpoint();
 
 const apiApp = express();
 const apiRouter = express.Router();
@@ -26,7 +29,7 @@ mongoose.connect('mongodb://localhost/alyaSmartMirror');
 const props = {
   appInfo: {},
   appPort: 3100,
-  /* put your ip address in the app host  */
+  /* put your ip address in the appHost  */
   appHost: '',
 };
 
@@ -50,22 +53,27 @@ awsIotClient.connect(config.awsIoTConfigs)
 });
 
 const allAddons = require('./data/approvedAddons');
+const addonsConfigurationSchemas = require('./data/addonsConfigurationSchemas');
 const AddonSchema = require('./data-model/Addon');
+const AddonConfigurationSchema = require('./data-model/AddonConfigurationSchema');
 
 (function initializeDatabase() {
-  AddonSchema.insertMany(allAddons, function(error, docs) {
-    if (error) {
-      console.log('database has been initialized');
-      return;
-    }
-    console.log(docs);
-  });
+  initializeResources(AddonSchema, allAddons);
+  initializeResources(AddonConfigurationSchema, addonsConfigurationSchemas);
 }());
+function initializeResources(schema, data) {
+  schema.insertMany(data, function(error, docs) {
+    if (error) {
+      console.log(schema.collection.collectionName + ' has been initialized');
+    }
+  });
+}
 
 recognitionService.initialize(socketIo, awsIotClient);
 userEndpoint.initialize(apiRouter);
 userAddonEndpoint.initialize(apiRouter, socketIo);
 addonEndpoint.initialize(apiRouter);
+addonConfigurationSchemaEndpoint.initialize(apiRouter);
 
 server.listen(appConfig.appPort, '0.0.0.0', function() {
   console.log('APIs on port ' + appConfig.appPort);

@@ -13,7 +13,7 @@ class AddonService extends BaseService {
     while (index < allApprovedAddons.length) {
       if (userAddons) {
         for (let i = 0; i < userAddons.length; i++) {
-          if (allApprovedAddons[index]._id == userAddons[i].addonId) {
+          if (allApprovedAddons[index]._id === userAddons[i].addonId) {
             index++;
             i = -1;
           }

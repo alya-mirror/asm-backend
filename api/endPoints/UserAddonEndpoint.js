@@ -8,8 +8,8 @@ class UserAddonEndpoint {
 
     this.basePath = '/userAddons';
     router.post(this.basePath + "/", this.install.bind(this));
-
     router.delete(this.basePath + "/:userAddonId", this.delete.bind(this));
+    router.put(this.basePath + "/:userAddonId", this.update.bind(this));
   }
 
   install(req, res) {
@@ -35,6 +35,21 @@ class UserAddonEndpoint {
       res.status(500).send(err);
     })
 
+  }
+
+  update(req, res) {
+    const method = 'UserAddonEndpoint.update';
+    const path = 'PUT ' + this.basePath + '/';
+    console.info(method, 'Access to', path);
+
+    const userAddonId = req.params.userAddonId;
+    const addonSettings = req.body.addonSettings;
+
+    this.userAddonService.updateUserAddon(userAddonId, addonSettings).then(() => {
+      res.sendStatus(200);
+    }).catch((err) => {
+      res.status(500).send(err);
+    })
   }
 
   delete(req, res) {

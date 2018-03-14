@@ -10,11 +10,6 @@ const AddonConfigurationSchema = new Schema({
     unique: true,
     required: true
   },
-  addonId: {
-    type: String,
-    required: true,
-    unique: true
-  },
   settingsSchema: {
     type: Object,
     required: true

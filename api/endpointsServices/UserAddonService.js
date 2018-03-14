@@ -1,5 +1,6 @@
 const BaseService = require('./BaseService')
 const SocketServer = require('../utils/SocketServer');
+const addonSchema = require('../../data-model/Addon');
 
 class UserAddonService extends BaseService {
   constructor(userAddonSchema, socketIo) {
@@ -27,7 +28,6 @@ class UserAddonService extends BaseService {
     }).catch((err) => {
       console.log(err);
     });
-    ;
   };
 
   installAddon(newUserAddon) {
@@ -57,7 +57,30 @@ class UserAddonService extends BaseService {
       })
     });
   }
-}
 
+  updateUserAddon(userAddonId, addonSettings) {
+    let self = this;
+    return new Promise((resolve, reject) => {
+      this.update({_id: userAddonId}, {$set: {addonSettings: addonSettings}}).then((userAddon) => {
+        let message = {data: {addonSettings: userAddon.addonSettings}};
+        addonSchema.findOne({_id: userAddon.addonId}, function (err, addon) {
+          if (err || !addon) {
+            reject(err);
+          }
+          self.socketServer.emitEvent(addon.npm_name, JSON.stringify(message)).then(() => {
+            resolve();
+          }).catch((err) => {
+            reject(err);
+          });
+          resolve();
+        }).catch((err) => {
+          reject(err);
+        });
+      }).catch((err) => {
+        reject(err);
+      });
+    });
+  }
+}
 
 module.exports = UserAddonService;
