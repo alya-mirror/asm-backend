@@ -1,6 +1,6 @@
 [
   {
-    "npm_name": "asm-analog-clock" ,
+    "npm_name": "@alya-mirror/asm-analog-clock-addon" ,
     "settingsSchema":{
       "type":"object",
       "properties":{

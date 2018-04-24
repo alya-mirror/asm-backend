@@ -2,7 +2,7 @@
   {
     "name": "ASManalogClock",
     "description": "an analog clock addon for alya smart mirror",
-    "npm_name": "asm-analog-clock",
+    "npm_name": "@alya-mirror/asm-analog-clock-addon",
     "repo_git_url": "https://github.com/alya-mirror/asm-analog-clock-addon"
   },
   {
