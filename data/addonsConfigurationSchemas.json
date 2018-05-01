@@ -21,7 +21,7 @@
   }
   },
   {
-    "npm_name":"asm-youtube",
+    "npm_name":"@alya-mirror/asm-youtube-addon",
     "settingsSchema":{
       "type":"object",
       "properties":{

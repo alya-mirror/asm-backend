@@ -32,16 +32,23 @@ class UserAddonService extends BaseService {
 
   installAddon(newUserAddon) {
     //TODO check if the user has installed this addon before
+    let self = this;
     return new Promise((resolve, reject) => {
       this.insert(newUserAddon).then(() => {
-        let message = {data: {userAddon: newUserAddon}};
-        this.socketServer.emitEvent("addAddon", JSON.stringify(message)).then(() => {
-          resolve();
+        addonSchema.findOne({_id: newUserAddon.addonId}, function (err, addon) {
+          if (err || !addon) {
+            reject(err);
+          }
+          let message = {data: {userAddon: newUserAddon, addon: addon}};
+          self.socketServer.emitEvent("addAddon", JSON.stringify(message)).then(() => {
+            resolve();
+          });
+        }).catch((err) => {
+          reject(err);
         });
-
       }).catch((err) => {
         reject(err);
-      })
+      });
     });
   }
 
