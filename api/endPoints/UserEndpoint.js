@@ -36,7 +36,7 @@ class UserEndpoint {
       firstName: firstName,
       faceId: ""
     });
-    this.userService.insert(newUser).then(() => {
+    this.userService.insert(newUser).then((savedUser) => {
       res.sendStatus(201);
     }).catch((err) => {
       if (err.code == 11000) {

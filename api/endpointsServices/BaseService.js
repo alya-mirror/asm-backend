@@ -6,12 +6,12 @@ class BaseService {
 
   insert(newSchema) {
     return new Promise((resolve, reject) => {
-      newSchema.save(function (err) {
+      newSchema.save(function (err, savedSchema) {
         if (err) {
           reject(err);
         }
         else {
-          resolve();
+          resolve(savedSchema);
         }
       });
     });

@@ -29,8 +29,8 @@ class UserAddonEndpoint {
       coreSettings: coreSettings,
       addonSettings: addonSettings
     });
-    this.userAddonService.installAddon(userAddon).then(() => {
-      res.status(200).send(userAddon);
+    this.userAddonService.installAddon(userAddon).then((userAddonInformation) => {
+      res.status(200).send(userAddonInformation);
     }).catch((err) => {
       res.status(500).send(err);
     })
