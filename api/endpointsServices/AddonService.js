@@ -13,7 +13,6 @@ class AddonService extends BaseService {
     while (index < allApprovedAddons.length) {
       if (userAddons) {
         for (let i = 0; i < userAddons.length; i++) {
-          console.log(allApprovedAddons[index]._id + '   ' + userAddons[i].addonId);
           if (allApprovedAddons[index]._id == userAddons[i].addonId) {
             index++;
             i = -1;
@@ -26,6 +25,29 @@ class AddonService extends BaseService {
     return unInstalledAddons;
   }
 
+  getInstalledAddons(userAddons) {
+    return new Promise((resolve, reject) => {
+      let installedAddons = [];
+      let addonsIDs = [];
+      for (let i = 0; i < userAddons.length; i++) {
+        addonsIDs.push(userAddons[i].addonId);
+      }
+      this.schema.find({
+        _id: {$in: addonsIDs}
+      }, function (err, docs) {
+        if (!err) {
+          docs.forEach(function (element) {
+            installedAddons.push(element);
+          });
+          resolve(installedAddons);
+        }
+        else {
+          console.log('error ' + err);
+        }
+      });
+    });
+  }
+
   getAllApprovedAddons(userId) {
     let self = this;
     return new Promise((resolve, reject) => {
@@ -36,8 +58,11 @@ class AddonService extends BaseService {
           }
           else {
             let unInstalledAddons = self.getUninstalledAddons(allApprovedAddons, userAddons);
-            let response = {"userUninstalledAddons": unInstalledAddons, "userInstalledAddons": userAddons};
-            resolve(response);
+            self.getInstalledAddons(userAddons).then((installedAddons) => {
+              let response = {"userUninstalledAddons": unInstalledAddons, "userInstalledAddons": installedAddons};
+              resolve(response);
+            });
+
           }
         });
       }).catch((err) => {

@@ -30,7 +30,7 @@ class UserAddonEndpoint {
       addonSettings: addonSettings
     });
     this.userAddonService.installAddon(userAddon).then(() => {
-      res.sendStatus(200);
+      res.status(200).send(userAddon);
     }).catch((err) => {
       res.status(500).send(err);
     })

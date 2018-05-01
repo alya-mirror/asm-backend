@@ -31,6 +31,19 @@ class BaseService {
     });
   }
 
+  findOne(query) {
+    return new Promise((resolve, reject) => {
+      this.schema.findOne(query, function (err, result) {
+        if (err) {
+          reject(err);
+        }
+        else {
+          resolve(result);
+        }
+      });
+    });
+  }
+
   update(query, update) {
     return new Promise((resolve, reject) => {
       this.schema.findOneAndUpdate(query, update, function (err, results) {
@@ -72,4 +85,5 @@ class BaseService {
   }
 
 }
+
 module.exports = BaseService;
