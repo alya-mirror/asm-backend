@@ -4,7 +4,7 @@
 
 2-Getting all the addons 
 
-<img width="800" alt="alladdons" src="https://user-images.githubusercontent.com/21360696/36949034-589c346c-1fe3-11e8-9ce9-7a3a601d63c4.png">
+<img width="800" alt="alladdons" src="https://user-images.githubusercontent.com/21360696/39656095-e2b95c70-4ffd-11e8-87e5-9dc8bbb94e42.png">
 
 ## Alya <--> backend 
 1-Recognizing the user through the matrix recognition 
