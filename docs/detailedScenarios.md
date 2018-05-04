@@ -9,8 +9,7 @@
 ## Alya <--> backend 
 1-Recognizing the user through the matrix recognition 
 
-![addons](https://user-images.githubusercontent.com/21360696/39656095-e2b95c70-4ffd-11e8-87e5-9dc8bbb94e42.png)
-
+-<img width="800" alt="recognize" src="https://user-images.githubusercontent.com/21360696/36949057-8b4fcac2-1fe3-11e8-870b-08c470130693.png">
 
 ## mobile <--> backend  <--> Alya 
 1-Train a new user picture through matrix recognition
