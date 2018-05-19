@@ -10,7 +10,7 @@ class SocketServer {
     self.io.on('connection', function (socket) {
       console.log('client has been connected');
       self.socket = socket;
-      resolve();
+      resolve(socket);
     });
     });
   }
@@ -30,14 +30,17 @@ class SocketServer {
     });
   }
 
-  emitEvent(eventName, message) {
+  emitEvent(eventName, message, receiverSocket) {
+
     let self = this;
     return new Promise((resolve, reject) => {
       if(!self.socket){
         reject('there is no client connected');
         return;
       }
-      self.socket.emit(eventName, message);
+
+      self.io.emit(eventName, message);
+
       console.log("socket message published successfully: " + eventName + " message " + message);
       resolve();
     });

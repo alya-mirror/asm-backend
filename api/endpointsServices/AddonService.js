@@ -43,7 +43,13 @@ class AddonService extends BaseService {
       }, function (err, docs) {
         if (!err) {
           docs.forEach(function (element) {
-            installedAddons.push(element);
+            for (let i=0; i<userAddons.length; i++){
+              if(userAddons[i].addonId == element._id){
+                element = element.toJSON();
+                element['userAddonId']= userAddons[i]._id;
+                installedAddons.push(element);
+              }
+            }
           });
           resolve(installedAddons);
         }
