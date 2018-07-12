@@ -30,7 +30,7 @@ class UserAddonService extends BaseService {
       console.log(err);
     });
   };
-
+  
   installAddon(newUserAddon) {
     //TODO check if the user has installed this addon before
     let self = this;
@@ -41,7 +41,10 @@ class UserAddonService extends BaseService {
           console.log('error' + err)
         }
         self.insert(newUserAddon).then((userAddon) => {
-          let message = {data: {userAddon: newUserAddon, addon: addon}};
+          newUserAddon = newUserAddon.toJSON();
+          newUserAddon['name'] = addon.name;
+          newUserAddon['npm_name'] = addon.npm_name;
+          let message = {data: {userAddon: newUserAddon}};
           let userAddonInformation = {"userAddonId": userAddon._id};
           self.socketServer.emitEvent("addAddon", JSON.stringify(message), self.socket).then(() => {
             resolve(userAddonInformation);
@@ -57,22 +60,37 @@ class UserAddonService extends BaseService {
   }
 
   deleteUserAddon(userAddonId) {
+    let self = this;
     return new Promise((resolve, reject) => {
-      this.delete({_id: userAddonId}).then(() => {
-        let message = {data: {userAddonId: userAddonId}};
-        this.socketServer.emitEvent("deleteAddon", JSON.stringify(message)).then(() => {
-          resolve();
+      this.findOne({_id: userAddonId}).then((userAddon) => {
+        this.delete({_id: userAddonId}).then(() => {
+          addonSchema.findOne({_id: userAddon.addonId}, function (err, addon) {
+            if (err) {
+              reject(err);
+            }
+            else {
+              userAddon = userAddon.toJSON();
+              userAddon['name'] = addon.name;
+              let message = {data: {userAddon: userAddon}};
+              self.socketServer.emitEvent("deleteAddon", JSON.stringify(message)).then(() => {
+                resolve();
+              });
+              resolve();
+            }
+          });
+        }).catch((err) => {
+          reject(err);
         });
       }).catch((err) => {
         reject(err);
-      })
+      });
     });
   }
 
   updateUserAddon(userAddonId, addonSettings) {
     let self = this;
+    console.log('this is the coming settings '+  JSON.stringify(addonSettings));
     return new Promise((resolve, reject) => {
-      console.log('this is the coming userAddonId' + userAddonId);
       this.update({_id: userAddonId}, {$set: {addonSettings: addonSettings}}).then((userAddon) => {
         let message = {data: {addonSettings: addonSettings}};
         addonSchema.findOne({_id: userAddon.addonId}, function (err, addon) {

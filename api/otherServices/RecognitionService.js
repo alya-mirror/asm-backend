@@ -49,7 +49,7 @@ class RecognitionService {
     let faceId = message.data.faceId;
     UserSchema.findOneAndUpdate({_id: userId}, {$set: {faceId: faceId}}, function (err, user) {
       if (err || !user) {
-        //TODO DECIDE WHAT ERROR YOU SHOULD SEND
+
         console.log(err + userId);
         return;
       }
@@ -70,7 +70,7 @@ class RecognitionService {
       faceId: faceId
     }, function (err, user) {
       if (err || !user) {
-        //TODO handle not found user error
+
         return;
       }
       let userId = user._id;

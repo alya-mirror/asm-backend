@@ -8,6 +8,10 @@ class UserService extends BaseService {
 
   signIn(email, password) {
     return new Promise((resolve, reject) => {
+      if(!email || !password){
+        reject(400);
+        return
+      }
       this.schema.findOne({
         email: email
       }, function (err, user) {
