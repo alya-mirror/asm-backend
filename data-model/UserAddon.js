@@ -20,7 +20,7 @@ const UserAddonsSchema = new Schema({
   addonSettings: {
     type: Object,
     required: true
-  },
+  }
 });
 
 module.exports = mongoose.model('UserAddon', UserAddonsSchema);

@@ -10,5 +10,8 @@
     "clientId": "alya_smart_mirror",
     "region": "us-east-1",
     "host": "ak6hspilv9mrx.iot.us-east-1.amazonaws.com"
-  }
+  },
+  "positions":["w3-display-topleft","w3-display-topmiddle","w3-display-topright",
+    "w3-display-left","w3-display-middle","w3-display-right",
+    "w3-display-bottomright","w3-display-bottommiddle","w3-display-bottomright"]
 }

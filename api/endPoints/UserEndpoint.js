@@ -1,5 +1,8 @@
 const UserService = require('../endpointsServices/UserService');
 const UserSchema = require('../../data-model/User');
+const config = require('../../config/config.default');
+
+let positionsMap = new Object();
 
 class UserEndpoint {
 
@@ -20,6 +23,21 @@ class UserEndpoint {
 
   }
 
+  initializePositions() {
+    positionsMap["w3-display-topleft"] = 0;
+    positionsMap["w3-display-topmiddle"] = 0;
+    positionsMap["w3-display-topright"] = 0;
+
+    positionsMap["w3-display-left"] = 0;
+    positionsMap["w3-display-middle"] = 0;
+    positionsMap["w3-display-right"] = 0;
+
+    positionsMap["w3-display-bottomright"] = 0;
+    positionsMap["w3-display-bottommiddle"] = 0;
+    positionsMap["w3-display-bottomright"] = 0;
+    return positionsMap;
+  }
+
   create(req, res) {
     const method = 'UserEndpoint.create ';
     const path = 'POST ' + this.basePath + '/';
@@ -29,12 +47,14 @@ class UserEndpoint {
     const firstName = body.firstName;
     const email = body.email;
     const password = body.password;
+    const mirrorConfiguration = this.initializePositions();
 
     const newUser = new UserSchema({
       email: email,
       password: password,
       firstName: firstName,
-      faceId: ""
+      faceId: "",
+      mirrorConfiguration: mirrorConfiguration
     });
     this.userService.insert(newUser).then((savedUser) => {
       res.sendStatus(201);
@@ -64,4 +84,5 @@ class UserEndpoint {
     });
   }
 }
+
 module.exports = UserEndpoint;

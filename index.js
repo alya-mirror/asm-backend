@@ -62,7 +62,7 @@ const AddonConfigurationSchema = require('./data-model/AddonConfigurationSchema'
   initializeResources(AddonConfigurationSchema, addonsConfigurationSchemas);
 }());
 function initializeResources(schema, data) {
-  schema.insertMany(data, function(error, docs) {
+  schema.insertMany(data, function (error, docs) {
     if (error) {
       console.log(schema.collection.collectionName + ' has been initialized');
     }
@@ -75,6 +75,6 @@ userAddonEndpoint.initialize(apiRouter, socketIo);
 addonEndpoint.initialize(apiRouter);
 addonConfigurationSchemaEndpoint.initialize(apiRouter);
 
-server.listen(appConfig.appPort, '0.0.0.0', function() {
+server.listen(appConfig.appPort, '0.0.0.0', function () {
   console.log('APIs on port ' + appConfig.appPort);
 });

@@ -40,14 +40,15 @@ class AddonService extends BaseService {
       }
       this.schema.find({
         _id: {$in: addonsIDs}
-      }, function (err, docs) {
+      }, function (err, addons) {
         if (!err) {
-          docs.forEach(function (element) {
+          addons.forEach(function (addon) {
             for (let i=0; i<userAddons.length; i++){
-              if(userAddons[i].addonId == element._id){
-                element = element.toJSON();
-                element['userAddonId']= userAddons[i]._id;
-                installedAddons.push(element);
+              if(userAddons[i].addonId == addon._id){
+                addon = addon.toJSON();
+                addon['userAddonId']= userAddons[i]._id;
+                addon['position']= userAddons[i].position;
+                installedAddons.push(addon);
               }
             }
           });

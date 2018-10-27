@@ -8,7 +8,7 @@ class UserService extends BaseService {
 
   signIn(email, password) {
     return new Promise((resolve, reject) => {
-      if(!email || !password){
+      if (!email || !password) {
         reject(400);
         return
       }
