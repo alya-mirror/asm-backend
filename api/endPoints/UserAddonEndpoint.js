@@ -11,6 +11,8 @@ class UserAddonEndpoint {
     router.delete(this.basePath + "/:userAddonId", this.delete.bind(this));
     router.put(this.basePath + "/:userAddonId", this.update.bind(this));
     router.put(this.basePath + "/coreSettings/:userAddonId", this.updateCoreSettings.bind(this));
+    router.get(this.basePath + "/getAll/:userId", this.getAll.bind(this));
+
   }
 
   install(req, res) {
@@ -53,6 +55,20 @@ class UserAddonEndpoint {
     })
   }
 
+  getAll(req, res) {
+    const method = 'UserAddonEndpoint.get';
+    const path = 'PUT ' + this.basePath + '/';
+    console.info(method, 'Access to', path);
+
+    const userId = req.params.userId;
+
+    this.userAddonService.getAllAddons(userId).then((userAddons) => {
+      res.status(200).send({"userAddons": userAddons});
+    }).catch((err) => {
+      res.status(500).send(err);
+    })
+  }
+
   updateCoreSettings(req, res) {
     const method = 'UserAddonEndpoint.updateCoreSettings';
     const path = 'PUT ' + this.basePath + '/';
@@ -82,7 +98,6 @@ class UserAddonEndpoint {
       res.status(500).send(err);
     })
   }
-
 
 }
 

@@ -279,6 +279,17 @@ class UserAddonService extends BaseService {
       });
     });
   }
+
+  getAllAddons(userId) {
+    return new Promise((resolve, reject) => {
+      this.find({userId: userId}).then((userAddons) => {
+        resolve(userAddons);
+      }).catch((error) => {
+        reject(error);
+      });
+    });
+  }
+  
 }
 
 module.exports = UserAddonService;
