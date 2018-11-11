@@ -27,7 +27,7 @@ const UserSchema = new Schema({
   }
 });
 
-UserSchema.pre('save', function (next) {
+UserSchema.pre('save', function(next) {
   const user = this;
 
   if (this.isModified('password') || this.isNew) {
@@ -48,7 +48,7 @@ UserSchema.pre('save', function (next) {
   }
 });
 
-UserSchema.methods.comparePassword = function (passw, cb) {
+UserSchema.methods.comparePassword = function(passw, cb) {
   bcrypt.compare(passw, this.password, (err, isMatch) => {
     if (err) {
       cb(err);
