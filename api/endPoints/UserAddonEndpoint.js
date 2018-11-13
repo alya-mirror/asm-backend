@@ -56,8 +56,8 @@ class UserAddonEndpoint {
   }
 
   getAll(req, res) {
-    const method = 'UserAddonEndpoint.get';
-    const path = 'PUT ' + this.basePath + '/';
+    const method = 'UserAddonEndpoint.getAll';
+    const path = 'GET ' + this.basePath + '/';
     console.info(method, 'Access to', path);
 
     const userId = req.params.userId;
@@ -73,7 +73,8 @@ class UserAddonEndpoint {
     const method = 'UserAddonEndpoint.updateCoreSettings';
     const path = 'PUT ' + this.basePath + '/';
     console.info(method, 'Access to', path);
-
+    console.log('this is the body ' );
+    console.dir(req.body);
     const userAddonId = req.params.userAddonId;
     const coreSettings = req.body.coreSettings;
     const oldCoreSettings = req.body.oldCoreSettings;

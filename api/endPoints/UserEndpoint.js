@@ -32,7 +32,7 @@ class UserEndpoint {
     positionsMap["w3-display-middle"] = 0;
     positionsMap["w3-display-right"] = 0;
 
-    positionsMap["w3-display-bottomright"] = 0;
+    positionsMap["w3-display-bottomleft"] = 0;
     positionsMap["w3-display-bottommiddle"] = 0;
     positionsMap["w3-display-bottomright"] = 0;
     return positionsMap;
