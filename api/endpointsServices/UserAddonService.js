@@ -254,11 +254,12 @@ class UserAddonService extends BaseService {
       self.findOne({_id: userAddonId}).then((resultedUserAddon) => {
         self.updatePosition(resultedUserAddon.userId, oldCoreSettings.position, coreSettings.position).then(() => {
           self.update({_id: userAddonId}, {$set: {coreSettings: coreSettings}}).then((userAddon) => {
-            let message = {data: {coreSettings: coreSettings}};
+
             addonSchema.findOne({_id: userAddon.addonId}, function (err, addon) {
               if (err || !addon) {
                 reject(err);
               }
+              let message = {data: {coreSettings: coreSettings, name: addon.name}};
               self.socketServer.emitEvent("changeAddonCoreSettings", JSON.stringify(message), self.socket).then(() => {
                 resolve();
               }).catch((err) => {
@@ -289,7 +290,7 @@ class UserAddonService extends BaseService {
       });
     });
   }
-  
+
 }
 
 module.exports = UserAddonService;
